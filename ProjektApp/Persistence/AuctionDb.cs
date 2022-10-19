@@ -14,7 +14,7 @@ namespace ProjectApp.Persistence
 
         [Required]
         [MaxLength(255)]
-        public string? Describtion { get; set; }
+        public string? Description { get; set; }
 
         [Required]
         public int StartingBid { get; set; }

@@ -16,7 +16,7 @@ namespace ProjectApp.Persistence
             {
                 Id = -1, // from seed data
                 Name = "Diamond Necklace",
-                Describtion = "Necklace from 1890",
+                Description = "Necklace from 1890",
                 StartingBid = 10000,
                 CreatedDate = DateTime.Now,
                 UserName = "zaedn@kth.se",
@@ -25,7 +25,7 @@ namespace ProjectApp.Persistence
             };
             modelBuilder.Entity<AuctionDb>().HasData(adb);
 
-            BidDb bdb = new BidDb
+            BidDb bdb = new BidDb()
             {
                 Id = -1, // from seed data
                 Amount = 10500,
@@ -33,25 +33,15 @@ namespace ProjectApp.Persistence
                 AuctionId = -1
             };
             modelBuilder.Entity<BidDb>().HasData(bdb);
-            /*modelBuilder.Entity<AuctionDb>().HasData(
-                new AuctionDb
-                {
-                    Id = -1, // from seed data
-                    Name = "Diamond Necklace",
-                    Describtion = "Necklace from 1890",
-                    StartingBid = 10000,
-                    CreatedDate = DateTime.Now,
-                    UserName = "zaedn@kth.se",
-                    Status = Core.Status.IN_PROGRESS
-                });
 
-            modelBuilder.Entity<BidDb>().HasData(new BidDb
+            BidDb bdb2 = new BidDb()
             {
-                Id = -1, // from seed data
-                Amount = 10500,
-                BidTime = DateTime.Now,
+                Id = -2, // from seed data
+                Amount = 13000,
+                BidTime = new DateTime(),
                 AuctionId = -1
-            });*/
+            };
+            modelBuilder.Entity<BidDb>().HasData(bdb2);
         }
     }
 }

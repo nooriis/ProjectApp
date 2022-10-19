@@ -17,8 +17,20 @@ namespace ProjectApp.Controllers
             _auctionService = auctionService;
         }
 
-        // GET: AuctionsController
+        // GET: AuctionsController/Auctions
         public ActionResult Index()
+        {
+            List<Auction> auctions = _auctionService.GetAll();
+            List<AuctionVM> auctionVMs = new();
+            foreach (var auction in auctions)
+            {
+                auctionVMs.Add(AuctionVM.FromAuction(auction));
+            }
+            return View(auctionVMs);
+        }
+
+        // GET: AuctionsController/Auctions/
+        public ActionResult UserAuctions()
         {
             string? userName = User.Identity.Name; // should be unique
             List<Auction> auctions = _auctionService.GetAllByUserName(userName);
@@ -29,11 +41,13 @@ namespace ProjectApp.Controllers
             }
             return View(auctionVMs);
         }
-        /*
-        // GET: AuctionsController/Details/5
+        
+        // GET: AuctionsController/Details/id
         public ActionResult Details(int id)
         {
-            return View();
+            Auction auction = _auctionService.GetById(id);
+            AuctionDetailsVM detailsVM = AuctionDetailsVM.FromAuction(auction);
+            return View(detailsVM);
         }
 
         // GET: AuctionsController/Create
@@ -45,20 +59,27 @@ namespace ProjectApp.Controllers
         // POST: AuctionsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(AuctionCreateVM vm)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                Auction auction = new Auction()
+                {
+                    Name = vm.Name,
+                    Description = vm.Description,
+                    StartingBid = vm.StartingBid,
+                    UserName = User.Identity.Name,
+                    Status = Status.IN_PROGRESS
+                };
+                _auctionService.Add(auction);
+                return RedirectToAction("Index");
 
+            }
+            return View(vm);
+        }
+        
         // GET: AuctionsController/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit()
         {
             return View();
         }
@@ -66,18 +87,16 @@ namespace ProjectApp.Controllers
         // POST: AuctionsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, EditVM vm)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                _auctionService.EditAuctionDescription(id, vm.Description);
+                return RedirectToAction("Index");
             }
-            catch
-            {
-                return View();
-            }
+            return View(vm);
         }
-
+        /*
         // GET: AuctionsController/Delete/5
         public ActionResult Delete(int id)
         {

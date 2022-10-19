@@ -16,9 +16,10 @@ namespace ProjectApp.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
-                    Describtion = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     StartingBid = table.Column<int>(type: "int", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UserName = table.Column<string>(type: "nvarchar(128)", maxLength: 128, nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -32,6 +33,7 @@ namespace ProjectApp.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Amount = table.Column<int>(type: "int", nullable: false),
                     BidTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     AuctionId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -48,8 +50,13 @@ namespace ProjectApp.Migrations
 
             migrationBuilder.InsertData(
                 table: "AuctionDbs",
-                columns: new[] { "Id", "CreatedDate", "Describtion", "Name", "StartingBid", "Status" },
-                values: new object[] { -1, new DateTime(2022, 10, 18, 22, 46, 5, 919, DateTimeKind.Local).AddTicks(2142), "Necklace from 1890", "Diamond Necklace", 10000, 1 });
+                columns: new[] { "Id", "CreatedDate", "Description", "Name", "StartingBid", "Status", "UserName" },
+                values: new object[] { -1, new DateTime(2022, 10, 19, 18, 29, 37, 258, DateTimeKind.Local).AddTicks(3901), "Necklace from 1890", "Diamond Necklace", 10000, 1, "zaedn@kth.se" });
+
+            migrationBuilder.InsertData(
+                table: "BidDbs",
+                columns: new[] { "Id", "Amount", "AuctionId", "BidTime" },
+                values: new object[] { -1, 10500, -1, new DateTime(2022, 10, 19, 18, 29, 37, 258, DateTimeKind.Local).AddTicks(4030) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BidDbs_AuctionId",

@@ -12,7 +12,7 @@ using ProjectApp.Persistence;
 namespace ProjectApp.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20221018204606_initial")]
+    [Migration("20221019162937_initial")]
     partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,7 @@ namespace ProjectApp.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Describtion")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -51,6 +51,11 @@ namespace ProjectApp.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<string>("UserName")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.HasKey("Id");
 
                     b.ToTable("AuctionDbs");
@@ -59,11 +64,12 @@ namespace ProjectApp.Migrations
                         new
                         {
                             Id = -1,
-                            CreatedDate = new DateTime(2022, 10, 18, 22, 46, 5, 919, DateTimeKind.Local).AddTicks(2142),
-                            Describtion = "Necklace from 1890",
+                            CreatedDate = new DateTime(2022, 10, 19, 18, 29, 37, 258, DateTimeKind.Local).AddTicks(3901),
+                            Description = "Necklace from 1890",
                             Name = "Diamond Necklace",
                             StartingBid = 10000,
-                            Status = 1
+                            Status = 1,
+                            UserName = "zaedn@kth.se"
                         });
                 });
 
@@ -74,6 +80,9 @@ namespace ProjectApp.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
 
                     b.Property<int>("AuctionId")
                         .HasColumnType("int");
@@ -86,6 +95,15 @@ namespace ProjectApp.Migrations
                     b.HasIndex("AuctionId");
 
                     b.ToTable("BidDbs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Amount = 10500,
+                            AuctionId = -1,
+                            BidTime = new DateTime(2022, 10, 19, 18, 29, 37, 258, DateTimeKind.Local).AddTicks(4030)
+                        });
                 });
 
             modelBuilder.Entity("ProjectApp.Persistence.BidDb", b =>

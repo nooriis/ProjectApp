@@ -33,7 +33,7 @@ namespace ProjectApp.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Describtion")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
@@ -62,8 +62,8 @@ namespace ProjectApp.Migrations
                         new
                         {
                             Id = -1,
-                            CreatedDate = new DateTime(2022, 10, 19, 16, 4, 37, 561, DateTimeKind.Local).AddTicks(8232),
-                            Describtion = "Necklace from 1890",
+                            CreatedDate = new DateTime(2022, 10, 19, 18, 29, 37, 258, DateTimeKind.Local).AddTicks(3901),
+                            Description = "Necklace from 1890",
                             Name = "Diamond Necklace",
                             StartingBid = 10000,
                             Status = 1,
@@ -100,7 +100,7 @@ namespace ProjectApp.Migrations
                             Id = -1,
                             Amount = 10500,
                             AuctionId = -1,
-                            BidTime = new DateTime(2022, 10, 19, 16, 4, 37, 561, DateTimeKind.Local).AddTicks(8459)
+                            BidTime = new DateTime(2022, 10, 19, 18, 29, 37, 258, DateTimeKind.Local).AddTicks(4030)
                         });
                 });
 

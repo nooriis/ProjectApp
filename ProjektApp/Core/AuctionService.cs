@@ -11,9 +11,39 @@ namespace ProjectApp.Core
             _auctionPersistence = auctionPersistence;
         }
 
+        public List<Auction> GetAll()
+        {
+            return _auctionPersistence.GetAll();
+        }
+
         public List<Auction> GetAllByUserName(string userName)
         {
             return _auctionPersistence.GetAllByUserName(userName);
+        }
+
+        public Auction GetById(int id)
+        {
+            return _auctionPersistence.GetById(id);
+        }
+
+        public void Add(Auction auction)
+        {
+            //assume no bid is new auction
+            if (auction == null || auction.Id != 0)
+            {
+                throw new InvalidDataException();
+            }
+            auction.CreatedDate = DateTime.Now;
+            _auctionPersistence.Add(auction);
+        }
+
+        public void EditAuctionDescription(int id, string newDescription)
+        {
+            if (String.IsNullOrEmpty(id.ToString()) || newDescription == null)
+            {
+                throw new InvalidDataException();
+            }
+            _auctionPersistence.EditAuctionDescription(id, newDescription);
         }
     }
 }
