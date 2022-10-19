@@ -26,34 +26,42 @@ namespace ProjectApp.Controllers
             }
             return View(auctionVMs);
         }
-        /*
+        
         // GET: AuctionsController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            Auction auction=_auctionService.GetById(id);
+            AuctionDetailsVM detailsVM = AuctionDetailsVM.FromAuction(auction); 
+            return View(detailsVM);
         }
-
+        
         // GET: AuctionsController/Create
         public ActionResult Create()
         {
             return View();
         }
+        
 
         // POST: AuctionsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(AuctionCreateVM vm)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                Auction auction = new Auction()
+                {
+                    Name = vm.Name,
+                    Description = vm.Description,
+                    StartingBid = vm.StartingBid
+                };
+                _auctionService.Add(auction);
+                return RedirectToAction("Index");
 
+            }
+            return View(vm);
+        }
+        /*
         // GET: AuctionsController/Edit/5
         public ActionResult Edit(int id)
         {

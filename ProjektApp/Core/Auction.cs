@@ -6,10 +6,10 @@ namespace ProjectApp.Core
     {
         public int Id { get; set; }
         public string? Name { get; set; }
-        public string? Describtion { get; set; }
+        public string? Description { get; set; }
 
         public int StartingBid { get; set; }
-        public DateTime CreatedDate { get; }
+        public DateTime CreatedDate { get; set; }
 
         private Status _status;
         public Status Status
@@ -29,7 +29,7 @@ namespace ProjectApp.Core
         {
             Id = id;
             Name = name;
-            Describtion = description;
+            Description = description;
             CreatedDate = DateTime.Now;
             StartingBid = startingBid;
             _status = status;
@@ -57,7 +57,7 @@ namespace ProjectApp.Core
 
         public override string ToString()
         {
-            return $"{Id}: {Name} - Description: {Describtion}";
+            return $"{Id}: {Name} - Description: {Description}";
         }
     }
 }

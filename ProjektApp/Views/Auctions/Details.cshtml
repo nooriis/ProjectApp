@@ -1,0 +1,77 @@
+﻿@model ProjectApp.ViewModels.AuctionDetailsVM
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Auction Details</h4>
+    <hr />
+    <dl class="row">
+  
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.StartingBid)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.StartingBid)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CreatedDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CreatedDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsInProgress)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsInProgress)
+        </dd>
+    </dl>
+</div>
+<div>
+    <h4>Bid</h4>
+    <table class="table">
+        <thead>
+            <tr> 
+                <th>
+                    <b>Bid Time</b>
+                </th>
+                <th>
+                    <b>Amount</b>
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model.BidVMs)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BidTime)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Amount)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit bid","EditBid",new {id=item.Id})
+                    </td>
+                </tr>
+            }
+        </tbody>
+</div>
+

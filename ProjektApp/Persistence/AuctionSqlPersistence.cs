@@ -15,6 +15,14 @@ namespace ProjectApp.Persistence
             _dbContext = dbContext;
             _mapper = mapper;
         }
+
+        public void Add(Auction auction)
+        {
+            AuctionDb adb = _mapper.Map<AuctionDb>(auction);
+            _dbContext.Add(adb);
+            _dbContext.SaveChanges();
+        }
+
         public List<Auction> GetAll()
         {
             var auctionDbs = _dbContext.AuctionDbs.ToList();
@@ -25,6 +33,22 @@ namespace ProjectApp.Persistence
                 result.Add(auction);
             }
             return result;
+        }
+
+        public Auction GetById(int id)
+        {
+             var auctionDb=_dbContext.AuctionDbs
+                .Include(a => a.BidDbs)
+                .Where(a=> a.Id==id)
+                .SingleOrDefault();
+
+            Auction auction = _mapper.Map<Auction>(auctionDb);
+            foreach(BidDb bdb in auctionDb.BidDbs)
+            {
+                auction.AddBid(_mapper.Map<Bid>(bdb));
+            }
+            return auction;
+
         }
     }
 }

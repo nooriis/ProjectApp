@@ -9,7 +9,7 @@ namespace ProjectApp.Persistence
         [Key]
         public int Id { get; set; }
         [Required]
-        public int Amount { get; }
+        public int Amount { get; set; }
 
         [Required]
         [DataType(DataType.DateTime)]
@@ -19,6 +19,7 @@ namespace ProjectApp.Persistence
         [ForeignKey("AuctionId")]
         public AuctionDb AuctionDb { get; set; }
 
+        public int AuctionId { get; set; }
 
     }
 }
