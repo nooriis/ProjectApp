@@ -10,6 +10,8 @@ namespace ProjectApp.ViewModels
         public string? Describtion { get; set; }
         public int StartingBid { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public string? UserName { get; set; }
         public bool IsInProgress { get; set; }
         public static AuctionVM FromAuction(Auction auction)
         {
@@ -20,6 +22,7 @@ namespace ProjectApp.ViewModels
                 Describtion = auction.Describtion,
                 StartingBid = auction.StartingBid,
                 CreatedDate = auction.CreatedDate,
+                UserName = auction.UserName,
                 IsInProgress = auction.IsInProgress()
             };
         }

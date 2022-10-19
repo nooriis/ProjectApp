@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using ProjectApp.Core;
 using ProjectApp.Core.Interfaces;
 using ProjectApp.Persistence;
+using Microsoft.AspNetCore.Identity;
+using ProjectApp.Data;
+using ProjectApp.Areas.Identity.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +16,13 @@ builder.Services.AddScoped<IAuctionPersistence, AuctionSqlPersistence>();
 // db, with dependency injection
 builder.Services.AddDbContext<AuctionDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectDbConnection")));
+
+// identity configuration
+// the first statement is missing from the scaffolding
+builder.Services.AddDbContext<ProjectAppIdentityContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("ProjectAppIdentityContextConnection")));
+builder.Services.AddDefaultIdentity<ProjectAppUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ProjectAppIdentityContext>();
 
 // add auto mapper scanning (requires AutoMapper package)
 builder.Services.AddAutoMapper(typeof(Program));
@@ -31,6 +41,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+app.UseAuthentication();;
 
 app.UseAuthorization();
 
@@ -38,4 +49,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
+app.MapRazorPages();
 app.Run();

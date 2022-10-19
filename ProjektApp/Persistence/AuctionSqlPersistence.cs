@@ -15,9 +15,12 @@ namespace ProjectApp.Persistence
             _dbContext = dbContext;
             _mapper = mapper;
         }
-        public List<Auction> GetAll()
+        public List<Auction> GetAllByUserName(string userName)
         {
-            var auctionDbs = _dbContext.AuctionDbs.ToList();
+            var auctionDbs = _dbContext.AuctionDbs
+            .Where(a => a.UserName.Equals(userName)) // updated for Identity
+            .ToList();
+
             List<Auction> result = new List<Auction>();
             foreach(AuctionDb adb in auctionDbs)
             {

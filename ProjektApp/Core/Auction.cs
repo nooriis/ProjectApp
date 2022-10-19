@@ -11,6 +11,8 @@ namespace ProjectApp.Core
         public int StartingBid { get; set; }
         public DateTime CreatedDate { get; }
 
+        public string UserName { get; set; }
+
         private Status _status;
         public Status Status
         {
