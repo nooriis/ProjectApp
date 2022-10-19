@@ -11,9 +11,9 @@ namespace ProjectApp.Core
             _auctionPersistence = auctionPersistence;
         }
 
-        public List<Auction> GetAll()
+        public List<Auction> GetAllByUserName(string userName)
         {
-            return _auctionPersistence.GetAll();
+            return _auctionPersistence.GetAllByUserName(userName);
         }
     }
 }

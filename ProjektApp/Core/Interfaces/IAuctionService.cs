@@ -2,6 +2,6 @@
 {
     public interface IAuctionService
     {
-        List<Auction> GetAll();
+        List<Auction> GetAllByUserName(string userName);
     }
 }

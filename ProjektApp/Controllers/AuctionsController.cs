@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProjectApp.Core;
 using ProjectApp.Core.Interfaces;
@@ -6,6 +7,7 @@ using ProjectApp.ViewModels;
 
 namespace ProjectApp.Controllers
 {
+    [Authorize]
     public class AuctionsController : Controller
     {
         private readonly IAuctionService _auctionService;
@@ -18,7 +20,8 @@ namespace ProjectApp.Controllers
         // GET: AuctionsController
         public ActionResult Index()
         {
-            List<Auction> auctions = _auctionService.GetAll();
+            string? userName = User.Identity.Name; // should be unique
+            List<Auction> auctions = _auctionService.GetAllByUserName(userName);
             List<AuctionVM> auctionVMs = new();
             foreach (var auction in auctions)
             {
