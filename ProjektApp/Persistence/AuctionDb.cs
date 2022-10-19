@@ -21,7 +21,7 @@ namespace ProjectApp.Persistence
 
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreatedDate { get;  }
 
         [Required]
         public Status Status { get; set; }
