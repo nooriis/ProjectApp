@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.CompilerServices;
 
 namespace ProjectApp.ViewModels
 {
@@ -15,6 +17,10 @@ namespace ProjectApp.ViewModels
         [Required]
         [Range(1, Int32.MaxValue, ErrorMessage = "Value should be greater than or equal to 1")]
         public int StartingBid { get; set; }
+
+        [Required(ErrorMessage = "Ending Date is required")]
+        [DataType(DataType.DateTime, ErrorMessage = "Invalid Date Format")]
+        public DateTime EndingDate { get; set; }
 
     }
 }

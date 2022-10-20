@@ -24,11 +24,19 @@ namespace ProjectApp.Persistence
         public DateTime CreatedDate { get; set; }
 
         [Required]
-        [MaxLength(128)]
-        public String? UserName { get; set; }
+        [DataType(DataType.DateTime)]
+        public DateTime EndingDate { get; set; }
 
         [Required]
-        public Status Status { get; set; }
+        [MaxLength(128)]
+        public String? AuctionOwner { get; set; }
+
+        [Required]
+        [MaxLength(128)]
+        public String? Winner { get; set; }
+
+        /*[Required]
+        public Status Status { get; set; }*/
 
         public IEnumerable<BidDb> BidDbs { get; set; } = new List<BidDb>();
     }

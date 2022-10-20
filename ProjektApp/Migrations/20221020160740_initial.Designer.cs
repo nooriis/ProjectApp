@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjectApp.Persistence;
 
@@ -11,9 +12,10 @@ using ProjectApp.Persistence;
 namespace ProjectApp.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    partial class AuctionDbContextModelSnapshot : ModelSnapshot
+    [Migration("20221020160740_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -68,9 +70,9 @@ namespace ProjectApp.Migrations
                         {
                             Id = -1,
                             AuctionOwner = "zaedn@kth.se",
-                            CreatedDate = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(5912),
+                            CreatedDate = new DateTime(2022, 10, 20, 18, 7, 40, 759, DateTimeKind.Local).AddTicks(5099),
                             Description = "Necklace from 1890",
-                            EndingDate = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(5985),
+                            EndingDate = new DateTime(2022, 10, 20, 18, 7, 40, 759, DateTimeKind.Local).AddTicks(5141),
                             Name = "Diamond Necklace",
                             StartingBid = 10000,
                             Winner = "None"
@@ -112,7 +114,7 @@ namespace ProjectApp.Migrations
                             Amount = 10500,
                             AuctionId = -1,
                             BidOwner = "fendi",
-                            BidTime = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(6087)
+                            BidTime = new DateTime(2022, 10, 20, 18, 7, 40, 759, DateTimeKind.Local).AddTicks(5303)
                         },
                         new
                         {
@@ -120,7 +122,7 @@ namespace ProjectApp.Migrations
                             Amount = 13000,
                             AuctionId = -1,
                             BidOwner = "zaed",
-                            BidTime = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(6152)
+                            BidTime = new DateTime(2022, 10, 20, 18, 7, 40, 759, DateTimeKind.Local).AddTicks(5329)
                         });
                 });
 

@@ -25,7 +25,13 @@
                 @Html.DisplayNameFor(model => model.CreatedDate)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.UserName)
+                @Html.DisplayNameFor(model => model.EndingDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AuctionOwner)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Winner)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.IsInProgress)
@@ -49,7 +55,13 @@
                 @Html.DisplayFor(modelItem => item.CreatedDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserName)
+                @Html.DisplayFor(modelItem => item.EndingDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AuctionOwner)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Winner)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.IsInProgress)

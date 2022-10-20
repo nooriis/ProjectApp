@@ -68,8 +68,8 @@ namespace ProjectApp.Controllers
                     Name = vm.Name,
                     Description = vm.Description,
                     StartingBid = vm.StartingBid,
-                    UserName = User.Identity.Name,
-                    Status = Status.IN_PROGRESS
+                    EndingDate = vm.EndingDate,
+                    AuctionOwner = User.Identity.Name,
                 };
                 _auctionService.Add(auction);
                 return RedirectToAction("Index");

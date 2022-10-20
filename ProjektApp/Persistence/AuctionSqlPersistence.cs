@@ -33,7 +33,7 @@ namespace ProjectApp.Persistence
         public List<Auction> GetAllByUserName(string userName)
         {
             var auctionDbs = _dbContext.AuctionDbs
-            .Where(a => a.UserName.Equals(userName)) // updated for Identity
+            .Where(a => a.AuctionOwner.Equals(userName)) // updated for Identity
             .ToList();
 
             List<Auction> result = new List<Auction>();

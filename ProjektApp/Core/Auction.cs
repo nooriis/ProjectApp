@@ -9,11 +9,15 @@ namespace ProjectApp.Core
         public string? Description { get; set; }
 
         public int StartingBid { get; set; }
+
         public DateTime CreatedDate { get; set; }
 
-        public string UserName { get; set; }
+        public DateTime EndingDate { get; set; }
 
-        private Status _status;
+        public string? AuctionOwner { get; set; }
+        public string? Winner { get; set; }
+
+        /*private Status _status;
         public Status Status
         {
             get => _status;
@@ -23,24 +27,23 @@ namespace ProjectApp.Core
                 _status = value;
                 //_bidTime = DateTime.Now;
             }
-        }
+        }*/
 
         private List<Bid> _bids = new List<Bid>();
         public IEnumerable<Bid> Bids => _bids;
-        public Auction(int id, string name, string description, int startingBid, Status status = Status.IN_PROGRESS)
+        public Auction(int id, string name, string description, DateTime endingDate, int startingBid)
         {
             Id = id;
             Name = name;
             Description = description;
             CreatedDate = DateTime.Now;
+            EndingDate = endingDate;
             StartingBid = startingBid;
-            _status = status;
         }
-        public Auction(string name, Status status = Status.IN_PROGRESS)
+        public Auction(string name)
         {
             Name = name;
             CreatedDate = DateTime.Now;
-            _status = status;
         }
         public Auction()
         {
@@ -53,7 +56,7 @@ namespace ProjectApp.Core
 
         public bool IsInProgress()
         {
-            if (Status == Status.IN_PROGRESS) return true;
+            if (CreatedDate < EndingDate) return true;
             return false;
         }
 

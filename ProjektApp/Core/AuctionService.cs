@@ -34,6 +34,7 @@ namespace ProjectApp.Core
                 throw new InvalidDataException();
             }
             auction.CreatedDate = DateTime.Now;
+            auction.Winner = "None";
             _auctionPersistence.Add(auction);
         }
 
