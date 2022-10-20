@@ -16,10 +16,10 @@ namespace ProjectApp.Core
             return _auctionPersistence.GetAll();
         }
 
-        public List<Auction> GetAllByUserName(string userName)
+        /*public List<Auction> GetAllByUserName(string userName)
         {
             return _auctionPersistence.GetAllByUserName(userName);
-        }
+        }*/
 
         public Auction GetById(int id)
         {
@@ -36,6 +36,21 @@ namespace ProjectApp.Core
             auction.CreatedDate = DateTime.Now;
             auction.Winner = "None";
             _auctionPersistence.Add(auction);
+        }
+
+        public void AddBid(Auction auction, Bid bid)
+        {
+            if (auction == null || bid == null || bid.Amount <= auction.StartingBid)
+            {
+                throw new InvalidDataException();
+            }
+            foreach (var b in auction.Bids)
+            {
+                if (bid.Amount <= b.Amount) throw new InvalidCastException();
+            }
+
+            bid.BidTime = DateTime.Now;
+           _auctionPersistence.AddBid(auction, bid);
         }
 
         public void EditAuctionDescription(int id, string newDescription)

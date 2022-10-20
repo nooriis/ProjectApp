@@ -3,7 +3,7 @@
     public class Bid
     {
         public int Id { get; set; }
-        public int Amount { get; }
+        public int Amount { get; set; }
         public DateTime BidTime { get; set; }
         public string? BidOwner { get; set; }
         public Bid(int id, int amount)

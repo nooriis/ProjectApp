@@ -30,7 +30,7 @@ namespace ProjectApp.Persistence
             }
             return result;
         }
-        public List<Auction> GetAllByUserName(string userName)
+        /*public List<Auction> GetAllByUserName(string userName)
         {
             var auctionDbs = _dbContext.AuctionDbs
             .Where(a => a.AuctionOwner.Equals(userName)) // updated for Identity
@@ -43,7 +43,7 @@ namespace ProjectApp.Persistence
                 result.Add(auction);
             }
             return result;
-        }
+        }*/
 
         public Auction GetById(int id)
         {
@@ -65,6 +65,15 @@ namespace ProjectApp.Persistence
         {
             AuctionDb adb = _mapper.Map<AuctionDb>(auction);
             _dbContext.Add(adb);
+            _dbContext.SaveChanges();
+        }
+
+        public void AddBid(Auction auction, Bid bid)
+        {
+            AuctionDb adb = _mapper.Map<AuctionDb>(auction);
+            BidDb bdb = _mapper.Map<BidDb>(bid);
+            bdb.AuctionId = adb.Id;
+            _dbContext.Add(bdb);
             _dbContext.SaveChanges();
         }
 

@@ -21,16 +21,21 @@ namespace ProjectApp.Controllers
         public ActionResult Index()
         {
             List<Auction> auctions = _auctionService.GetAll();
+            List<Auction> auctionsInProgress = new List<Auction>();
+            foreach (Auction auction in auctions)
+            {
+                if (auction.IsInProgress()) auctionsInProgress.Add(auction);
+            }
             List<AuctionVM> auctionVMs = new();
-            foreach (var auction in auctions)
+            foreach (var auction in auctionsInProgress)
             {
                 auctionVMs.Add(AuctionVM.FromAuction(auction));
             }
             return View(auctionVMs);
         }
 
-        // GET: AuctionsController/Auctions/
-        public ActionResult UserAuctions()
+        // GET: AuctionsController/Auctions/UserAuctions
+        /*public ActionResult UserAuctions()
         {
             string? userName = User.Identity.Name; // should be unique
             List<Auction> auctions = _auctionService.GetAllByUserName(userName);
@@ -40,12 +45,13 @@ namespace ProjectApp.Controllers
                 auctionVMs.Add(AuctionVM.FromAuction(auction));
             }
             return View(auctionVMs);
-        }
+        }*/
         
         // GET: AuctionsController/Details/id
         public ActionResult Details(int id)
         {
             Auction auction = _auctionService.GetById(id);
+            if (auction == null) return NotFound();
             AuctionDetailsVM detailsVM = AuctionDetailsVM.FromAuction(auction);
             return View(detailsVM);
         }
@@ -77,7 +83,34 @@ namespace ProjectApp.Controllers
             }
             return View(vm);
         }
-        
+
+        // GET: AuctionsController/AddBid
+        public ActionResult AddBid()
+        {
+            return View();
+        }
+
+        // GET: AuctionsController/AddBid
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddBid(int id, AddBidVM vm)
+        {
+            if (ModelState.IsValid)
+            {
+                if (!IsUser(id)) return BadRequest();
+                Auction auction = _auctionService.GetById(id);
+                Bid bid = new Bid()
+                {
+                    Amount = vm.Amount,
+                    BidOwner = User.Identity.Name,
+                };
+                _auctionService.AddBid(auction, bid);
+                return RedirectToAction("Index");
+
+            }
+            return View(vm);
+        }
+
         // GET: AuctionsController/Edit/5
         public ActionResult Edit()
         {
@@ -91,6 +124,7 @@ namespace ProjectApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                if (IsUser(id)) return BadRequest();
                 _auctionService.EditAuctionDescription(id, vm.Description);
                 return RedirectToAction("Index");
             }
@@ -117,5 +151,12 @@ namespace ProjectApp.Controllers
                 return View();
             }
         }*/
+
+        private Boolean IsUser(int id)
+        {
+            Auction auction = _auctionService.GetById(id);
+            if (!auction.AuctionOwner.Equals(User.Identity.Name)) return true;
+            return false;
+        }
     }
 }
