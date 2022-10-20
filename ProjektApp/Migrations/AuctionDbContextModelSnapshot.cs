@@ -30,13 +30,21 @@ namespace ProjectApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AuctionOwner")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Describtion")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("EndingDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -46,10 +54,7 @@ namespace ProjectApp.Migrations
                     b.Property<int>("StartingBid")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserName")
+                    b.Property<string>("Winner")
                         .IsRequired()
                         .HasMaxLength(128)
                         .HasColumnType("nvarchar(128)");
@@ -62,12 +67,13 @@ namespace ProjectApp.Migrations
                         new
                         {
                             Id = -1,
-                            CreatedDate = new DateTime(2022, 10, 19, 16, 4, 37, 561, DateTimeKind.Local).AddTicks(8232),
-                            Describtion = "Necklace from 1890",
+                            AuctionOwner = "zaedn@kth.se",
+                            CreatedDate = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(5912),
+                            Description = "Necklace from 1890",
+                            EndingDate = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(5985),
                             Name = "Diamond Necklace",
                             StartingBid = 10000,
-                            Status = 1,
-                            UserName = "zaedn@kth.se"
+                            Winner = "None"
                         });
                 });
 
@@ -85,6 +91,11 @@ namespace ProjectApp.Migrations
                     b.Property<int>("AuctionId")
                         .HasColumnType("int");
 
+                    b.Property<string>("BidOwner")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<DateTime>("BidTime")
                         .HasColumnType("datetime2");
 
@@ -100,7 +111,16 @@ namespace ProjectApp.Migrations
                             Id = -1,
                             Amount = 10500,
                             AuctionId = -1,
-                            BidTime = new DateTime(2022, 10, 19, 16, 4, 37, 561, DateTimeKind.Local).AddTicks(8459)
+                            BidOwner = "fendi",
+                            BidTime = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(6087)
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Amount = 13000,
+                            AuctionId = -1,
+                            BidOwner = "zaed",
+                            BidTime = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(6152)
                         });
                 });
 

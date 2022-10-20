@@ -4,19 +4,18 @@
     {
         public int Id { get; set; }
         public int Amount { get; }
-
-        private DateTime _bidTime;
-        public DateTime BidTime { get => _bidTime; }
+        public DateTime BidTime { get; set; }
+        public string? BidOwner { get; set; }
         public Bid(int id, int amount)
         {
             Id = id;
             Amount = amount;
-            _bidTime = DateTime.Now;
+            BidTime = DateTime.Now;
         }
         public Bid(int amount)
         {
             Amount = amount;
-            _bidTime = DateTime.Now;
+            BidTime = DateTime.Now;
         }
         public Bid()
         {

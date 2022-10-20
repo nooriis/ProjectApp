@@ -16,42 +16,36 @@ namespace ProjectApp.Persistence
             {
                 Id = -1, // from seed data
                 Name = "Diamond Necklace",
-                Describtion = "Necklace from 1890",
+                Description = "Necklace from 1890",
                 StartingBid = 10000,
                 CreatedDate = DateTime.Now,
-                UserName = "zaedn@kth.se",
-                Status = Core.Status.IN_PROGRESS,
+                EndingDate = DateTime.Now,
+                AuctionOwner = "zaedn@kth.se",
+                Winner = "None",
+                //Status = Core.Status.IN_PROGRESS,
                 BidDbs = new List<BidDb>()
             };
             modelBuilder.Entity<AuctionDb>().HasData(adb);
 
-            BidDb bdb = new BidDb
+            BidDb bdb = new BidDb()
             {
                 Id = -1, // from seed data
                 Amount = 10500,
                 BidTime = DateTime.Now,
+                BidOwner = "fendi",
                 AuctionId = -1
             };
             modelBuilder.Entity<BidDb>().HasData(bdb);
-            /*modelBuilder.Entity<AuctionDb>().HasData(
-                new AuctionDb
-                {
-                    Id = -1, // from seed data
-                    Name = "Diamond Necklace",
-                    Describtion = "Necklace from 1890",
-                    StartingBid = 10000,
-                    CreatedDate = DateTime.Now,
-                    UserName = "zaedn@kth.se",
-                    Status = Core.Status.IN_PROGRESS
-                });
 
-            modelBuilder.Entity<BidDb>().HasData(new BidDb
+            BidDb bdb2 = new BidDb()
             {
-                Id = -1, // from seed data
-                Amount = 10500,
+                Id = -2, // from seed data
+                Amount = 13000,
                 BidTime = DateTime.Now,
+                BidOwner = "zaed",
                 AuctionId = -1
-            });*/
+            };
+            modelBuilder.Entity<BidDb>().HasData(bdb2);
         }
     }
 }

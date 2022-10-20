@@ -12,8 +12,8 @@ using ProjectApp.Persistence;
 namespace ProjectApp.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20221018204606_initial")]
-    partial class initial
+    [Migration("20221020160811_BidDbs_added")]
+    partial class BidDbs_added
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,13 +32,21 @@ namespace ProjectApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AuctionOwner")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Describtion")
+                    b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(255)
                         .HasColumnType("nvarchar(255)");
+
+                    b.Property<DateTime>("EndingDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -48,8 +56,10 @@ namespace ProjectApp.Migrations
                     b.Property<int>("StartingBid")
                         .HasColumnType("int");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+                    b.Property<string>("Winner")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.HasKey("Id");
 
@@ -59,11 +69,13 @@ namespace ProjectApp.Migrations
                         new
                         {
                             Id = -1,
-                            CreatedDate = new DateTime(2022, 10, 18, 22, 46, 5, 919, DateTimeKind.Local).AddTicks(2142),
-                            Describtion = "Necklace from 1890",
+                            AuctionOwner = "zaedn@kth.se",
+                            CreatedDate = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(5912),
+                            Description = "Necklace from 1890",
+                            EndingDate = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(5985),
                             Name = "Diamond Necklace",
                             StartingBid = 10000,
-                            Status = 1
+                            Winner = "None"
                         });
                 });
 
@@ -75,8 +87,16 @@ namespace ProjectApp.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
                     b.Property<int>("AuctionId")
                         .HasColumnType("int");
+
+                    b.Property<string>("BidOwner")
+                        .IsRequired()
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
 
                     b.Property<DateTime>("BidTime")
                         .HasColumnType("datetime2");
@@ -86,6 +106,24 @@ namespace ProjectApp.Migrations
                     b.HasIndex("AuctionId");
 
                     b.ToTable("BidDbs");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = -1,
+                            Amount = 10500,
+                            AuctionId = -1,
+                            BidOwner = "fendi",
+                            BidTime = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(6087)
+                        },
+                        new
+                        {
+                            Id = -2,
+                            Amount = 13000,
+                            AuctionId = -1,
+                            BidOwner = "zaed",
+                            BidTime = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(6152)
+                        });
                 });
 
             modelBuilder.Entity("ProjectApp.Persistence.BidDb", b =>

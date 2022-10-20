@@ -13,7 +13,11 @@ namespace ProjectApp.Persistence
 
         [Required]
         [DataType(DataType.DateTime)]
-        public DateTime BidTime { get; set; }   
+        public DateTime BidTime { get; set; }
+
+        [Required]
+        [MaxLength(128)]
+        public String? BidOwner { get; set; }
 
         // FK and navigation property 
         [ForeignKey("AuctionId")]
