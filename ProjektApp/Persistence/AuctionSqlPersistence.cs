@@ -3,6 +3,7 @@ using Microsoft.CodeAnalysis.FlowAnalysis.DataFlow;
 using Microsoft.EntityFrameworkCore;
 using ProjectApp.Core;
 using ProjectApp.Core.Interfaces;
+using ProjectApp.ViewModels;
 using System.Diagnostics;
 
 namespace ProjectApp.Persistence
@@ -20,30 +21,41 @@ namespace ProjectApp.Persistence
 
         public List<Auction> GetAll()
         {
-            var auctionDbs = _dbContext.AuctionDbs.ToList();
+            var auctionDbs = _dbContext.AuctionDbs
+                .Include(b => b.BidDbs).ToList();
 
             List<Auction> result = new List<Auction>();
             foreach (AuctionDb adb in auctionDbs)
             {
                 Auction auction = _mapper.Map<Auction>(adb);
+                foreach (BidDb bdb in adb.BidDbs)
+                {
+                    auction.AddBid(_mapper.Map<Bid>(bdb));
+                }
                 result.Add(auction);
             }
             return result;
         }
-        /*public List<Auction> GetAllByUserName(string userName)
+        public List<Auction> GetAllByUserName(string userName)
         {
             var auctionDbs = _dbContext.AuctionDbs
+            .Include(b=> b.BidDbs)
             .Where(a => a.AuctionOwner.Equals(userName)) // updated for Identity
             .ToList();
+            
 
             List<Auction> result = new List<Auction>();
             foreach(AuctionDb adb in auctionDbs)
             {
                 Auction auction = _mapper.Map<Auction>(adb);
+                foreach (BidDb bdb in adb.BidDbs)
+                {
+                    auction.AddBid(_mapper.Map<Bid>(bdb));
+                }
                 result.Add(auction);
             }
             return result;
-        }*/
+        }
 
         public Auction GetById(int id)
         {

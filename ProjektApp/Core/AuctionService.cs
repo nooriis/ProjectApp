@@ -16,10 +16,10 @@ namespace ProjectApp.Core
             return _auctionPersistence.GetAll();
         }
 
-        /*public List<Auction> GetAllByUserName(string userName)
+        public List<Auction> GetAllByUserName(string userName)
         {
             return _auctionPersistence.GetAllByUserName(userName);
-        }*/
+        }
 
         public Auction GetById(int id)
         {
@@ -40,7 +40,7 @@ namespace ProjectApp.Core
 
         public void AddBid(Auction auction, Bid bid)
         {
-            if (auction == null || bid == null || bid.Amount <= auction.StartingBid)
+            if (auction == null || bid == null || bid.Amount < auction.StartingBid||DateTime.Now>auction.EndingDate)
             {
                 throw new InvalidDataException();
             }
@@ -48,7 +48,7 @@ namespace ProjectApp.Core
             {
                 if (bid.Amount <= b.Amount) throw new InvalidCastException();
             }
-
+        
             bid.BidTime = DateTime.Now;
            _auctionPersistence.AddBid(auction, bid);
         }

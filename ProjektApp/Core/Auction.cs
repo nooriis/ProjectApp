@@ -56,7 +56,7 @@ namespace ProjectApp.Core
 
         public bool IsInProgress()
         {
-            if (CreatedDate < EndingDate) return true;
+            if (DateTime.Now < EndingDate) return true;
             return false;
         }
 

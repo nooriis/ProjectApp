@@ -22,6 +22,7 @@ namespace ProjectApp.Controllers
         {
             List<Auction> auctions = _auctionService.GetAll();
             List<Auction> auctionsInProgress = new List<Auction>();
+            
             foreach (Auction auction in auctions)
             {
                 if (auction.IsInProgress()) auctionsInProgress.Add(auction);
@@ -35,18 +36,79 @@ namespace ProjectApp.Controllers
         }
 
         // GET: AuctionsController/Auctions/UserAuctions
-        /*public ActionResult UserAuctions()
+        public ActionResult UserAuctions()
         {
             string? userName = User.Identity.Name; // should be unique
             List<Auction> auctions = _auctionService.GetAllByUserName(userName);
+            //List<Auction> auctions = _auctionService.GetAll();
             List<AuctionVM> auctionVMs = new();
             foreach (var auction in auctions)
             {
+                if (!auction.IsInProgress())
+                {
+                    int bid2 = 0;
+                   foreach(var bid in auction.Bids)
+                    {
+                        if (bid.Amount > bid2)
+                        {
+                            auction.Winner=bid.BidOwner;
+                        }
+                        bid2 = bid.Amount;
+                    }
+                }
                 auctionVMs.Add(AuctionVM.FromAuction(auction));
             }
             return View(auctionVMs);
-        }*/
-        
+        }
+        // GET: AuctionsController/Auctions/WonAuctions
+        public ActionResult WonAuctions()
+        {
+            string? userName = User.Identity.Name; // should be unique
+            //List<Auction> auctions = _auctionService.GetAllByUserName(userName);
+            List<Auction> auctions = _auctionService.GetAll();
+            List<AuctionVM> auctionVMs = new();
+            foreach (var auction in auctions)
+            {
+                if (!auction.IsInProgress())
+                {
+                    int bid2 = 0;
+                    foreach (var bid in auction.Bids)
+                    {
+                        if (bid.Amount > bid2)
+                        {
+                            auction.Winner = bid.BidOwner;
+                        }
+                        bid2 = bid.Amount;
+                    }
+                }
+                if(auction.Winner==userName)auctionVMs.Add(AuctionVM.FromAuction(auction));
+            }
+            return View(auctionVMs);
+        }
+        // GET: AuctionsController/Auctions/YourBidAuctions
+        public ActionResult YourBidAuctions()
+        {
+            string? userName = User.Identity.Name; // should be unique
+
+            List<Auction> auctions = _auctionService.GetAll();
+            List<AuctionVM> auctionVMs = new();
+            foreach (var auction in auctions)
+            {
+                if (auction.IsInProgress())
+                {
+                    foreach (var bid in auction.Bids)
+                    {
+                        if (bid.BidOwner == userName)
+                        {
+                            auctionVMs.Add(AuctionVM.FromAuction(auction));
+                            break;
+                        }
+                    }
+                }
+               
+            }
+            return View(auctionVMs);
+        }
         // GET: AuctionsController/Details/id
         public ActionResult Details(int id)
         {
@@ -104,6 +166,7 @@ namespace ProjectApp.Controllers
                     Amount = vm.Amount,
                     BidOwner = User.Identity.Name,
                 };
+                auction.Winner = User.Identity.Name;
                 _auctionService.AddBid(auction, bid);
                 return RedirectToAction("Index");
 
