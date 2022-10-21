@@ -48,7 +48,7 @@ namespace ProjectApp.Persistence
         public Auction GetById(int id)
         {
             var auctionDb = _dbContext.AuctionDbs
-               .Include(a => a.BidDbs)
+               .Include(a => a.BidDbs.OrderByDescending(b => b.Amount))
                .Where(a => a.Id == id)
                .SingleOrDefault();
 
@@ -58,7 +58,6 @@ namespace ProjectApp.Persistence
                 auction.AddBid(_mapper.Map<Bid>(bdb));
             }
             return auction;
-
         }
 
         public void Add(Auction auction)

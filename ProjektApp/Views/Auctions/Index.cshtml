@@ -4,10 +4,10 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Ongoing Auctions</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Create New Auction</a>
 </p>
 <table class="table">
     <thead>
@@ -67,9 +67,19 @@
                 @Html.DisplayFor(modelItem => item.IsInProgress)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {id=item.Id}) |
-                @Html.ActionLink("Bids", "Details", new {id=item.Id}) |
-                @Html.ActionLink("Add Bid","AddBid",new {id=item.Id})
+                
+                @if (User.Identity.Name.Equals(item.AuctionOwner)){
+                    @Html.Raw("| ")
+                    @Html.ActionLink("Edit", "Edit", new {id=item.Id})
+                } 
+                @Html.Raw("|")
+                @Html.ActionLink("Bids", "Details", new {id=item.Id})         
+                @if (!User.Identity.Name.Equals(item.AuctionOwner))
+                {
+                    @Html.Raw("| ")
+                    @Html.ActionLink("Add Bid","AddBid",new {id=item.Id})
+                }
+                @Html.Raw("|")
             </td>
         </tr>
 }

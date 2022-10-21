@@ -46,7 +46,7 @@ namespace ProjectApp.Core
             }
             foreach (var b in auction.Bids)
             {
-                if (bid.Amount <= b.Amount) throw new InvalidCastException();
+                if (bid.Amount <= b.Amount) throw new InvalidDataException();
             }
 
             bid.BidTime = DateTime.Now;
