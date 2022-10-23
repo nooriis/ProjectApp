@@ -7,27 +7,11 @@ namespace ProjectApp.Core
         public int Id { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }
-
         public int StartingBid { get; set; }
-
         public DateTime CreatedDate { get; set; }
-
         public DateTime EndingDate { get; set; }
-
         public string? AuctionOwner { get; set; }
         public string? Winner { get; set; }
-
-        /*private Status _status;
-        public Status Status
-        {
-            get => _status;
-            set
-            {
-                if (_status == Status.DONE) throw new InvalidOperationException("Auction is over");
-                _status = value;
-                //_bidTime = DateTime.Now;
-            }
-        }*/
 
         private List<Bid> _bids = new List<Bid>();
         public IEnumerable<Bid> Bids => _bids;

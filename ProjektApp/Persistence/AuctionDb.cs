@@ -35,9 +35,6 @@ namespace ProjectApp.Persistence
         [MaxLength(128)]
         public String? Winner { get; set; }
 
-        /*[Required]
-        public Status Status { get; set; }*/
-
         public IEnumerable<BidDb> BidDbs { get; set; } = new List<BidDb>();
     }
 }

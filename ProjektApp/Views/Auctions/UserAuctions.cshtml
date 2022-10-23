@@ -4,7 +4,7 @@
     ViewData["Title"] = "UserAuctions";
 }
 
-<h1>UserAuctions</h1>
+<h2>Your submitted auctions</h2>
 
 
 <table class="table">
@@ -65,7 +65,8 @@
                 @Html.DisplayFor(modelItem => item.IsInProgress)
             </td>
             <td>
-                @Html.ActionLink("Bids", "Details", new {id=item.Id}) 
+                @Html.Raw("| ")
+                @Html.ActionLink("Bids", "Details", new {id=item.Id}) |
             </td>
         </tr>
 }

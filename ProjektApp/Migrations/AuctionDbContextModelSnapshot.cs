@@ -62,19 +62,6 @@ namespace ProjectApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AuctionDbs");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            AuctionOwner = "zaedn@kth.se",
-                            CreatedDate = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(5912),
-                            Description = "Necklace from 1890",
-                            EndingDate = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(5985),
-                            Name = "Diamond Necklace",
-                            StartingBid = 10000,
-                            Winner = "None"
-                        });
                 });
 
             modelBuilder.Entity("ProjectApp.Persistence.BidDb", b =>
@@ -104,24 +91,6 @@ namespace ProjectApp.Migrations
                     b.HasIndex("AuctionId");
 
                     b.ToTable("BidDbs");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            Amount = 10500,
-                            AuctionId = -1,
-                            BidOwner = "fendi",
-                            BidTime = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(6087)
-                        },
-                        new
-                        {
-                            Id = -2,
-                            Amount = 13000,
-                            AuctionId = -1,
-                            BidOwner = "zaed",
-                            BidTime = new DateTime(2022, 10, 20, 18, 8, 11, 405, DateTimeKind.Local).AddTicks(6152)
-                        });
                 });
 
             modelBuilder.Entity("ProjectApp.Persistence.BidDb", b =>

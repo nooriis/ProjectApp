@@ -12,8 +12,8 @@ using ProjectApp.Persistence;
 namespace ProjectApp.Migrations
 {
     [DbContext(typeof(AuctionDbContext))]
-    [Migration("20221020160740_initial")]
-    partial class initial
+    [Migration("20221023155057_BidDbs_added")]
+    partial class BidDbs_added
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -64,19 +64,6 @@ namespace ProjectApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AuctionDbs");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            AuctionOwner = "zaedn@kth.se",
-                            CreatedDate = new DateTime(2022, 10, 20, 18, 7, 40, 759, DateTimeKind.Local).AddTicks(5099),
-                            Description = "Necklace from 1890",
-                            EndingDate = new DateTime(2022, 10, 20, 18, 7, 40, 759, DateTimeKind.Local).AddTicks(5141),
-                            Name = "Diamond Necklace",
-                            StartingBid = 10000,
-                            Winner = "None"
-                        });
                 });
 
             modelBuilder.Entity("ProjectApp.Persistence.BidDb", b =>
@@ -106,24 +93,6 @@ namespace ProjectApp.Migrations
                     b.HasIndex("AuctionId");
 
                     b.ToTable("BidDbs");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = -1,
-                            Amount = 10500,
-                            AuctionId = -1,
-                            BidOwner = "fendi",
-                            BidTime = new DateTime(2022, 10, 20, 18, 7, 40, 759, DateTimeKind.Local).AddTicks(5303)
-                        },
-                        new
-                        {
-                            Id = -2,
-                            Amount = 13000,
-                            AuctionId = -1,
-                            BidOwner = "zaed",
-                            BidTime = new DateTime(2022, 10, 20, 18, 7, 40, 759, DateTimeKind.Local).AddTicks(5329)
-                        });
                 });
 
             modelBuilder.Entity("ProjectApp.Persistence.BidDb", b =>

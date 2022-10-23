@@ -38,19 +38,20 @@ namespace ProjectApp.Core
             _auctionPersistence.Add(auction);
         }
 
-        public void AddBid(Auction auction, Bid bid)
+        public bool AddBid(Auction auction, Bid bid)
         {
-            if (auction == null || bid == null || bid.Amount < auction.StartingBid||DateTime.Now>auction.EndingDate)
+            if (auction == null || bid == null || bid.Amount < auction.StartingBid || DateTime.Now>auction.EndingDate)
             {
-                throw new InvalidDataException();
+                return false;
             }
             foreach (var b in auction.Bids)
             {
-                if (bid.Amount <= b.Amount) throw new InvalidCastException();
+                if (bid.Amount <= b.Amount) return false;
             }
         
             bid.BidTime = DateTime.Now;
            _auctionPersistence.AddBid(auction, bid);
+            return true;
         }
 
         public void EditAuctionDescription(int id, string newDescription)

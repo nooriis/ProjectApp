@@ -40,18 +40,17 @@ namespace ProjectApp.Controllers
         {
             string? userName = User.Identity.Name; // should be unique
             List<Auction> auctions = _auctionService.GetAllByUserName(userName);
-            //List<Auction> auctions = _auctionService.GetAll();
             List<AuctionVM> auctionVMs = new();
             foreach (var auction in auctions)
             {
                 if (!auction.IsInProgress())
                 {
                     int bid2 = 0;
-                   foreach(var bid in auction.Bids)
+                    foreach (var bid in auction.Bids)
                     {
                         if (bid.Amount > bid2)
                         {
-                            auction.Winner=bid.BidOwner;
+                            auction.Winner = bid.BidOwner;
                         }
                         bid2 = bid.Amount;
                     }
@@ -60,11 +59,11 @@ namespace ProjectApp.Controllers
             }
             return View(auctionVMs);
         }
+
         // GET: AuctionsController/Auctions/WonAuctions
         public ActionResult WonAuctions()
         {
             string? userName = User.Identity.Name; // should be unique
-            //List<Auction> auctions = _auctionService.GetAllByUserName(userName);
             List<Auction> auctions = _auctionService.GetAll();
             List<AuctionVM> auctionVMs = new();
             foreach (var auction in auctions)
@@ -81,10 +80,11 @@ namespace ProjectApp.Controllers
                         bid2 = bid.Amount;
                     }
                 }
-                if(auction.Winner==userName)auctionVMs.Add(AuctionVM.FromAuction(auction));
+                if (auction.Winner == userName) auctionVMs.Add(AuctionVM.FromAuction(auction));
             }
             return View(auctionVMs);
         }
+
         // GET: AuctionsController/Auctions/YourBidAuctions
         public ActionResult YourBidAuctions()
         {
@@ -105,11 +105,11 @@ namespace ProjectApp.Controllers
                         }
                     }
                 }
-               
             }
             return View(auctionVMs);
         }
-        // GET: AuctionsController/Details/id
+
+        // GET: AuctionsController/Auctions/Details/id
         public ActionResult Details(int id)
         {
             Auction auction = _auctionService.GetById(id);
@@ -118,13 +118,13 @@ namespace ProjectApp.Controllers
             return View(detailsVM);
         }
 
-        // GET: AuctionsController/Create
+        // GET: AuctionsController/Auctions/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: AuctionsController/Create
+        // POST: AuctionsController/Auctions/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(AuctionCreateVM vm)
@@ -146,13 +146,13 @@ namespace ProjectApp.Controllers
             return View(vm);
         }
 
-        // GET: AuctionsController/AddBid
+        // GET: AuctionsController/Auctions/AddBid/5
         public ActionResult AddBid()
         {
             return View();
         }
 
-        // GET: AuctionsController/AddBid
+        // GET: AuctionsController/Auctions/AddBid/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult AddBid(int id, AddBidVM vm)
@@ -167,20 +167,26 @@ namespace ProjectApp.Controllers
                     BidOwner = User.Identity.Name,
                 };
                 auction.Winner = User.Identity.Name;
-                _auctionService.AddBid(auction, bid);
-                return RedirectToAction("Index");
-
+                bool checkBid = _auctionService.AddBid(auction, bid);
+                if (!checkBid)
+                {
+                    TempData["Status"] = "Bid must be higher than the earlier bids/startingbid!";
+                    return RedirectToAction("AddBid");
+                } else
+                {
+                    return RedirectToAction("Index");
+                }
             }
             return View(vm);
         }
 
-        // GET: AuctionsController/Edit/5
+        // GET: AuctionsController/Auctions/Edit/5
         public ActionResult Edit()
         {
             return View();
         }
 
-        // POST: AuctionsController/Edit/5
+        // POST: AuctionsController/Auctions/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, EditVM vm)
@@ -193,27 +199,6 @@ namespace ProjectApp.Controllers
             }
             return View(vm);
         }
-        /*
-        // GET: AuctionsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: AuctionsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }*/
 
         private Boolean IsUser(int id)
         {
