@@ -12,7 +12,7 @@ namespace ProjectApp.Persistence
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
 
-            AuctionDb adb = new AuctionDb
+            /*AuctionDb adb = new AuctionDb
             {
                 Id = -1, // from seed data
                 Name = "Diamond Necklace",
@@ -45,7 +45,7 @@ namespace ProjectApp.Persistence
                 BidOwner = "zaed",
                 AuctionId = -1
             };
-            modelBuilder.Entity<BidDb>().HasData(bdb2);
+            modelBuilder.Entity<BidDb>().HasData(bdb2);*/
         }
     }
 }

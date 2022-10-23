@@ -1,15 +1,16 @@
 ﻿@model IEnumerable<ProjectApp.ViewModels.AuctionVM>
 
 @{
-    ViewData["Title"] = "UserAuctions";
+    ViewData["Title"] = "YourBidAuctions";
 }
 
-<h2>Your submitted auctions</h2>
+<h2>Auctions with your bids</h2>
 
 
 <table class="table">
     <thead>
         <tr>
+
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
@@ -67,6 +68,7 @@
             <td>
                 @Html.Raw("| ")
                 @Html.ActionLink("Bids", "Details", new {id=item.Id}) |
+                @Html.ActionLink("Add Bid","AddBid",new {id=item.Id}) |
             </td>
         </tr>
 }
